@@ -24,7 +24,14 @@ io.on('connection', socket => {
   // runs any time connection is made on web page
   socket.on('join-room', (roomId, userId) => {
     // On front end when we have roomId and user, call everything inside join-room
-    console.log({userId, roomId})
+    // console.log({ userId, roomId })
+    // user joins room, emits broadcast user connect message (dont emit message to self)
+    socket.join(roomId)
+    socket.to(roomId).emit('user-connected', userId)
+
+    socket.on('disconnect', () => {
+      socket.to(roomId).emit('user-disconnected', userId)
+    })
   })
 })
 
