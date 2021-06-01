@@ -20,4 +20,12 @@ app.get('/:room', (req, res) => {
   res.render('room', {roomId: req.params.room})
 })
 
+io.on('connection', socket => {
+  // runs any time connection is made on web page
+  socket.on('join-room', (roomId, userId) => {
+    // On front end when we have roomId and user, call everything inside join-room
+    console.log({userId, roomId})
+  })
+})
+
 server.listen(port, console.log(`server listening on port: ${port}`))
