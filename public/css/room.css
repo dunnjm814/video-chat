@@ -1,0 +1,18 @@
+
+.video-canvas{
+  overflow-y: none;
+}
+#video-grid{
+  margin: 0;
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  overflow-y: none;
+}
+video{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+  overflow-y: none;
+}

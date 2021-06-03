@@ -10,9 +10,11 @@ app.set('view engine', 'ejs')
 
 app.use(express.static('public'))
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   // create a new room, redirect user to this room
-  res.redirect(`/${uuidV4()}`)
+  // req.body
+  res.render('index')
+  // await res.redirect(`/${uuidV4()}`)
 })
 
 app.get('/:room', (req, res) => {
