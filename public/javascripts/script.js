@@ -33,12 +33,6 @@ navigator.mediaDevices.getUserMedia({
 })
 
 socket.on('user-disconnected', userId => {
-  // console.log(`${userId} has disconnected`)
-  // let closePeer = peer[userId]
-
-  // if (closePeer) {
-  //   closePeer.close()
-  // }
   if (peers[userId]) peers[userId].close();
 })
 
@@ -71,3 +65,18 @@ function addVideoStream(video, stream) {
   })
   videoGrid.append(video)
 }
+
+const muteButton = document.getElementById('mute')
+const camOff = document.getElementById('cam-off')
+
+muteButton.addEventListener('click', e => {
+  e.preventDefault()
+  console.log('clicked')
+  if (muteButton.className === 'not-mute') {
+    muteButton.classList.remove("not-mute");
+    muteButton.classList.add("mute");
+  } else {
+      muteButton.classList.remove("mute");
+      muteButton.classList.add("not-mute");
+  }
+})
