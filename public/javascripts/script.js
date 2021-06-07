@@ -66,17 +66,17 @@ function addVideoStream(video, stream) {
   videoGrid.append(video)
 }
 
-const muteButton = document.getElementById('mute')
+const muteButton = document.getElementById('mute-icon')
 const camOff = document.getElementById('cam-off')
 
 muteButton.addEventListener('click', e => {
   e.preventDefault()
   console.log('clicked')
-  if (muteButton.className === 'not-mute') {
-    muteButton.classList.remove("not-mute");
-    muteButton.classList.add("mute");
+  if (muteButton.classList.contains("fa-volume-up")) {
+    muteButton.classList.remove("fa-volume-up");
+    muteButton.classList.add("fa-volume-mute");
   } else {
-      muteButton.classList.remove("mute");
-      muteButton.classList.add("not-mute");
+    muteButton.classList.remove("fa-volume-mute");
+    muteButton.classList.add("fa-volume-up");
   }
 })
