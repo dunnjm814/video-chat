@@ -31,6 +31,11 @@ io.on('connection', socket => {
     socket.join(roomId)
     socket.to(roomId).emit('user-connected', userId)
 
+    // listen for chatMessage
+    socket.on('chatMessage', msg => {
+      console.log(msg)
+    })
+
     socket.on('disconnect', () => {
       socket.to(roomId).emit('user-disconnected', userId)
     })

@@ -94,3 +94,13 @@ camButton.addEventListener('click', e => {
     camIcon.classList.add("fa-video");
   }
 })
+
+const chatForm = document.getElementById("chat-form");
+
+chatForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // get message text from form
+  const msg = e.target.elements.msg.value
+  // message to server
+  socket.emit('chatMessage', msg)
+})
