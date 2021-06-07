@@ -66,17 +66,31 @@ function addVideoStream(video, stream) {
   videoGrid.append(video)
 }
 
-const muteButton = document.getElementById('mute-icon')
-const camOff = document.getElementById('cam-off')
+const muteButton = document.getElementById('mute')
+const muteIcon = document.getElementById('mute-icon')
+const camButton = document.getElementById('cam-off')
+const camIcon = document.getElementById('video-on')
 
 muteButton.addEventListener('click', e => {
   e.preventDefault()
   console.log('clicked')
-  if (muteButton.classList.contains("fa-volume-up")) {
-    muteButton.classList.remove("fa-volume-up");
-    muteButton.classList.add("fa-volume-mute");
+  if (muteIcon.classList.contains("fa-volume-up")) {
+    muteIcon.classList.remove("fa-volume-up");
+    muteIcon.classList.add("fa-volume-mute");
   } else {
-    muteButton.classList.remove("fa-volume-mute");
-    muteButton.classList.add("fa-volume-up");
+    muteIcon.classList.remove("fa-volume-mute");
+    muteIcon.classList.add("fa-volume-up");
+  }
+})
+
+camButton.addEventListener('click', e => {
+  e.preventDefault();
+  console.log('clicked')
+  if (camIcon.classList.contains('fa-video')) {
+    camIcon.classList.remove("fa-video");
+    camIcon.classList.add("fa-video-slash");
+  } else {
+    camIcon.classList.remove("fa-video-slash");
+    camIcon.classList.add("fa-video");
   }
 })
