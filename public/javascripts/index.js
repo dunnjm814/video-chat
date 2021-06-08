@@ -5,11 +5,13 @@ window.addEventListener("DOMContentLoaded", (e) => {
   const connect = document.getElementById('submit-room')
   const roomName = document.getElementById('room-name')
   const roomHostName = document.getElementById('host-name')
-  const url = window.location.href
+  let url = window.location.href
 
   connect.addEventListener("click", e => {
     e.preventDefault();
-    const info = new FormData(roomForm)
-    console.log(url, info)
+    // const info = new FormData(roomForm)
+    // console.log(url, info)
+    // url += info.roomName
+    window.location.href = `${url}${roomName.value}`
   })
 })

@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+const formatMsg = require('./utils/messages')
 const { v4: uuidV4 } = require('uuid')
 
 const port = process.env.PORT || 3000
@@ -34,7 +35,7 @@ io.on('connection', socket => {
     // listen for chatMessage
     socket.on('chatMessage', msg => {
       console.log(msg)
-      io.emit('message', msg)
+      io.emit('message', formatMsg('username', msg))
     })
 
     socket.on('disconnect', () => {
