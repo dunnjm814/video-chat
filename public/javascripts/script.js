@@ -6,6 +6,10 @@ const myPeer = new Peer(undefined, {
 })
 const myVideo = document.createElement('video')
 myVideo.muted = true
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+})
+console.log(username, room)
 
 const peers = {}
 
@@ -31,18 +35,19 @@ navigator.mediaDevices.getUserMedia({
     connectNewUser(userId, stream)
   })
 })
-
-socket.on('user-disconnected', userId => {
-  if (peers[userId]) peers[userId].close();
+socket.on('user-connected', userId => {
+  console.log(`${userId} has connected`)
 })
 
 myPeer.on('open', id => {
   socket.emit('join-room', ROOM_ID, id)
 })
+socket.emit('joinRoom', { username, room } )
 
-socket.on('user-connected', userId => {
-  console.log(`${userId} has connected`)
+socket.on('user-disconnected', userId => {
+  if (peers[userId]) peers[userId].close();
 })
+
 
 function connectNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)

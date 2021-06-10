@@ -7,11 +7,11 @@ window.addEventListener("DOMContentLoaded", (e) => {
   const roomHostName = document.getElementById('host-name')
   let url = window.location.href
 
-  connect.addEventListener("click", e => {
-    e.preventDefault();
-    // const info = new FormData(roomForm)
-    // console.log(url, info)
-    // url += info.roomName
-    window.location.href = `${url}${roomName.value}`
-  })
+  // connect.addEventListener("click", e => {
+  //   e.preventDefault();
+  //   // const info = new FormData(roomForm)
+  //   // console.log(url, info)
+  //   // url += info.roomName
+  //   window.location.href = `${url}${roomName.value}`
+  // })
 })
