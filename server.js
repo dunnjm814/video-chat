@@ -3,7 +3,7 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const formatMsg = require('./utils/messages')
-const {userJoin, getCurrentUser} = require('./utils/users')
+const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./utils/users')
 const { v4: uuidV4 } = require('uuid')
 const Qs = require("qs");
 
@@ -30,10 +30,17 @@ app.get('/:room', (req, res) => {
 
 io.on('connection', socket => {
   // runs any time connection is made on web page
+  console.log('connection')
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room)
+    console.log({user})
     socket.join(user.room)
-    socket.to(room).emit(`${username} has connected`, username);
+    socket.to(room).emit(`user-connected`, username);
+
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    })
 
     socket.on("chatMessage", (msg) => {
       console.log(msg);
@@ -42,26 +49,17 @@ io.on('connection', socket => {
     });
 
     socket.on("disconnect", () => {
-      socket.to(room).emit(`${username} has disconnected`, username);
+      const user = userLeave(socket.id)
+      if (user) {
+        socket.to(user.room).emit(`user-disconnected`, user.username);
+
+        io.to(user.room).emit("roomUsers", {
+          room: user.room,
+          users: getRoomUsers(user.room),
+        });
+      }
     });
   })
-  // socket.on('join-room', (roomId, userId) => {
-  //   // On front end when we have roomId and user, call everything inside join-room
-  //   // console.log({ userId, roomId })
-  //   // user joins room, emits broadcast user connect message (dont emit message to self)
-  //   socket.join(roomId)
-  //   socket.to(roomId).emit('user-connected', userId)
-
-  //   // listen for chatMessage
-  //   socket.on('chatMessage', msg => {
-  //     console.log(msg)
-  //     io.emit('message', formatMsg('username', msg))
-  //   })
-
-  //   socket.on('disconnect', () => {
-  //     socket.to(roomId).emit('user-disconnected', userId)
-  //   })
-  // })
 })
 
 server.listen(port, console.log(`server listening on port: ${port}`))
